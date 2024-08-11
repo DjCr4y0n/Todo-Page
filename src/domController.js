@@ -14,9 +14,21 @@ function createProject() {
     return new Promise((resolve) => {
         const content = document.querySelector('.projects-container');
         const project = document.createElement('li');
+        var a = document.createElement('a'); 
+                
+        var link = document.createTextNode("This is link");
+        
+        a.appendChild(link); 
+        
+        a.title = "This is Link"; 
+        
+        a.href = "https://www.geeksforgeeks.org"; 
+
+        project.appendChild(a);
+
 
         projectInfo().then((name) => {
-            project.textContent = name;
+            link.textContent = name;
             content.appendChild(project);
             resolve(name);  // Resolve the promise with the project name
         });
