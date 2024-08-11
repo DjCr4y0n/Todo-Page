@@ -1,3 +1,5 @@
+import {createProjectServer} from "./menuFunctions";
+
 function controller() {
     const addBtn = document.querySelector('.add');
 
@@ -8,9 +10,10 @@ function controller() {
 }
 
 function createProject() {
+    createProjectServer();
     return new Promise((resolve) => {
-        const content = document.querySelector('.projects');
-        const project = document.createElement('div');
+        const content = document.querySelector('.projects-container');
+        const project = document.createElement('li');
 
         projectInfo().then((name) => {
             project.textContent = name;
