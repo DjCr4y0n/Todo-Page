@@ -25,8 +25,11 @@ function createProject() {
 
 function projectInfo() {
     return new Promise((resolve) => {
+        const formContainer = document.createElement('div');
+        formContainer.classList.add('centered-form');
         const form = document.createElement('form');
         form.setAttribute("method", "post");
+
 
         var name = document.createElement("input");
         name.setAttribute("type", "text");
@@ -46,7 +49,8 @@ function projectInfo() {
         form.append(name);
         form.append(s);
 
-        document.body.appendChild(form);
+        formContainer.appendChild(form); // Append the form to the container
+        document.body.appendChild(formContainer);
     });
 }
 
