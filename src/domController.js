@@ -1,0 +1,52 @@
+function controller() {
+    const addBtn = document.querySelector('.add');
+
+    addBtn.addEventListener("click", async () => {
+        const name = await createProject(); // Wait for the project to be created
+        console.log(`Project created with name: ${name}`);
+    });
+}
+
+function createProject() {
+    return new Promise((resolve) => {
+        const content = document.querySelector('.projects');
+        const project = document.createElement('div');
+
+        projectInfo().then((name) => {
+            project.textContent = name;
+            content.appendChild(project);
+            resolve(name);  // Resolve the promise with the project name
+        });
+    });
+}
+
+function projectInfo() {
+    return new Promise((resolve) => {
+        const form = document.createElement('form');
+        form.setAttribute("method", "post");
+
+        var name = document.createElement("input");
+        name.setAttribute("type", "text");
+        name.setAttribute("name", "name");
+        name.setAttribute("placeholder", "Name");
+
+        var s = document.createElement("button");
+        s.textContent = "Submit";
+
+        s.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent form submission
+            const projectName = name.value; // Get the value from the input
+            form.remove(); // Optionally remove the form after submission
+            resolve(projectName); // Resolve the promise with the project name
+        });
+
+        form.append(name);
+        form.append(s);
+
+        document.body.appendChild(form);
+    });
+}
+
+export {
+    controller
+}
