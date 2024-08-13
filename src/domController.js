@@ -6,7 +6,7 @@ function controller() {
     const addBtn = document.querySelector('.add');
 
     addBtn.addEventListener("click", async () => {
-        const name = await createProject(); // Wait for the project to be created
+        const name = await createProject();
         console.log(`Project created with name: ${name}`);
     });
 
@@ -14,6 +14,10 @@ function controller() {
         if(e.target.matches('.projectBtn'))
         {
             changeActiveProject(e.target);
+        }
+        if(e.target.matches('add'))
+        {
+            createProject();
         }
     });
 }
@@ -65,20 +69,21 @@ function projectInfo() {
         var s = document.createElement("button");
         s.textContent = "Submit";
 
-        s.addEventListener("click", (event) => {
-            event.preventDefault(); 
-            const projectName = name.value;
-            const projectDescription = description.value;
-            form.remove(); 
-            resolve(projectName, projectDescription); 
-        });
-
         form.append(name);
         form.append(description);
         form.append(s);
 
         formContainer.appendChild(form); 
         document.body.appendChild(formContainer);
+
+        s.addEventListener("click", (event) => {
+            event.preventDefault(); 
+            const projectName = name.value;
+            const projectDescription = description.value;
+            form.remove();
+            formContainer.remove(); 
+            resolve(projectName, projectDescription); 
+        });
     });
 }
 
