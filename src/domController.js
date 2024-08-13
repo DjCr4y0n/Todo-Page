@@ -1,11 +1,20 @@
 import {createProjectServer} from "./menuFunctions";
 
+var doProjectsExist = false;
+
 function controller() {
     const addBtn = document.querySelector('.add');
 
     addBtn.addEventListener("click", async () => {
         const name = await createProject(); // Wait for the project to be created
         console.log(`Project created with name: ${name}`);
+    });
+
+    document.addEventListener('click', (e) => {
+        if(e.target.matches('.projectBtn'))
+        {
+            changeActiveProject(e.target);
+        }
     });
 }
 
@@ -14,24 +23,24 @@ function createProject() {
     return new Promise((resolve) => {
         const content = document.querySelector('.projects-container');
         const project = document.createElement('li');
-        var a = document.createElement('a'); 
-                
-        var link = document.createTextNode("This is link");
+        project.classList.add('project');
+        var btn = document.createElement('button');
+        btn.classList.add('projectBtn');
+        if(doProjectsExist == true) document.querySelector('.project.active').classList.remove('active');
+        project.classList.add('active');
         
-        a.appendChild(link); 
-        
-        a.title = "This is Link"; 
-        
-        a.href = "https://www.geeksforgeeks.org"; 
-
-        project.appendChild(a);
 
 
-        projectInfo().then((name) => {
-            link.textContent = name;
+        projectInfo().then((name, description) => {
+            btn.innerHTML = name;
+            createProjectServer(name, description)
             content.appendChild(project);
-            resolve(name);  // Resolve the promise with the project name
+            resolve(name, description);  
         });
+
+        project.appendChild(btn);
+        doProjectsExist = true;
+        console.log(doProjectsExist);
     });
 }
 
@@ -48,22 +57,35 @@ function projectInfo() {
         name.setAttribute("name", "name");
         name.setAttribute("placeholder", "Name");
 
+        var description = document.createElement("input");
+        description.setAttribute("type", "text");
+        description.setAttribute("name", "description");
+        description.setAttribute("placeholder", "Description");
+
         var s = document.createElement("button");
         s.textContent = "Submit";
 
         s.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent form submission
-            const projectName = name.value; // Get the value from the input
-            form.remove(); // Optionally remove the form after submission
-            resolve(projectName); // Resolve the promise with the project name
+            event.preventDefault(); 
+            const projectName = name.value;
+            const projectDescription = description.value;
+            form.remove(); 
+            resolve(projectName, projectDescription); 
         });
 
         form.append(name);
+        form.append(description);
         form.append(s);
 
-        formContainer.appendChild(form); // Append the form to the container
+        formContainer.appendChild(form); 
         document.body.appendChild(formContainer);
     });
+}
+
+function changeActiveProject(project)
+{
+    document.querySelector('.projectBtn.active').classList.remove('active');
+    project.classList.add('active');
 }
 
 export {
