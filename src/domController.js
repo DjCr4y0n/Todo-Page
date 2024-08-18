@@ -1,5 +1,4 @@
 import {creareToDoServer, createProjectServer} from "./menuFunctions";
-import { creareToDoServer } from "./menuFunctions";
 
 var doProjectsExist = false;
 
@@ -12,7 +11,7 @@ function controller() {
     });
 
     document.addEventListener('click', (e) => {
-        if(e.target.matches('.projectBtn'))
+        if(e.target.matches('.project'))
         {
             changeActiveProject(e.target);
             renderProject(e.target);
@@ -32,23 +31,23 @@ function controller() {
 function createProject() {
     return new Promise((resolve) => {
         const content = document.querySelector('.projects-container');
-        const project = document.createElement('li');
+        const project = document.createElement('button');
         project.classList.add('project');
-        var btn = document.createElement('button');
-        btn.classList.add('projectBtn');
-        if(doProjectsExist == true) document.querySelector('.projectBtn.active').classList.remove('active');
-        btn.classList.add('active');
+        //var btn = document.createElement('button');
+        //btn.classList.add('projectBtn');
+        if(doProjectsExist == true) document.querySelector('.project.active').classList.remove('active');
+        project.classList.add('active');
         
 
 
         projectInfo().then((name, description) => {
-            btn.innerHTML = name;
+            project.innerHTML = name;
             createProjectServer(name, description)
             content.appendChild(project);
             resolve(name, description);  
         });
 
-        project.appendChild(btn);
+        //project.appendChild(btn);
         doProjectsExist = true;
         console.log(doProjectsExist);
     });
@@ -95,7 +94,7 @@ function projectInfo() {
 
 function changeActiveProject(project)
 {
-    document.querySelector('.projectBtn.active').classList.remove('active');
+    document.querySelector('.project.active').classList.remove('active');
     project.classList.add('active');
 }
 
