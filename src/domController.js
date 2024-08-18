@@ -11,10 +11,10 @@ function controller() {
     });
 
     document.addEventListener('click', (e) => {
-        if(e.target.matches('.project'))
+        if(e.target.matches('project'))
         {
             changeActiveProject(e.target);
-            renderProject(e.target);
+            renderProject();
         }
         if(e.target.matches('add'))
         {
@@ -33,8 +33,6 @@ function createProject() {
         const content = document.querySelector('.projects-container');
         const project = document.createElement('button');
         project.classList.add('project');
-        //var btn = document.createElement('button');
-        //btn.classList.add('projectBtn');
         if(doProjectsExist == true) document.querySelector('.project.active').classList.remove('active');
         project.classList.add('active');
         
@@ -42,12 +40,12 @@ function createProject() {
 
         projectInfo().then((name, description) => {
             project.innerHTML = name;
+            project.id = name;
             createProjectServer(name, description)
             content.appendChild(project);
             resolve(name, description);  
         });
 
-        //project.appendChild(btn);
         doProjectsExist = true;
         console.log(doProjectsExist);
     });
@@ -98,7 +96,7 @@ function changeActiveProject(project)
     project.classList.add('active');
 }
 
-function renderProject(project)
+function renderProject()
 {
     const content = document.querySelector('.main');
     content.innerHTML = '';
@@ -113,13 +111,13 @@ function renderProject(project)
     content.appendChild(space);
 }
 
-function creareToDo(project)
+function creareToDo()
 {
+    const project = document.querySelector('.active');
     return new Promise((resolve) => {
+        
         const toDoCard = document.createElement('div');
         toDoCard.classList.add('toDo');
-        var btn = document.createElement('button');
-        btn.classList.add('deleteBtn');
         
 
         ToDoInfo().then((title,description,dueDate,priority) => {
@@ -128,9 +126,7 @@ function creareToDo(project)
             resolve(title,description,dueDate,priority);  
         });
 
-        project.appendChild(btn);
-        doProjectsExist = true;
-        console.log(doProjectsExist);
+        project.appendChild(toDoCard);
     });
 }
 
@@ -209,7 +205,7 @@ function ToDoInfo()
     });
 }
 
-function addToDotoProject(card)
+function addToDotoProject(project)
 {
 
 }

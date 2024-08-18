@@ -32,6 +32,12 @@ body
     gap: 15px;
 }
 
+.projects-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
 .projects-headline
 {
     display: flex;
