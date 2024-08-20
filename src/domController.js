@@ -1,6 +1,7 @@
 import {creareToDoServer, createProjectServer} from "./menuFunctions";
 
 var doProjectsExist = false;
+const cardArray = [];
 
 function controller() {
     const addBtn = document.querySelector('.add');
@@ -11,19 +12,20 @@ function controller() {
     });
 
     document.addEventListener('click', (e) => {
-        if(e.target.matches('project'))
+        if(e.target.matches('.project'))
         {
             changeActiveProject(e.target);
             renderProject();
         }
-        if(e.target.matches('add'))
+        if(e.target.matches('.add'))
         {
             createProject();
-            renderProject(e.target);
+            renderProject();
         }
-        if(e.target.matches('addCard'))
+        if(e.target.matches('.addT'))
         {
-            creareToDo(e.target.parentNode);
+            console.log('ggggg')
+            creareToDo(e.target);
         }
     });
 }
@@ -46,8 +48,7 @@ function createProject() {
             resolve(name, description);  
         });
 
-        doProjectsExist = true;
-        console.log(doProjectsExist);
+       doProjectsExist = true;
     });
 }
 
@@ -98,15 +99,15 @@ function changeActiveProject(project)
 
 function renderProject()
 {
+    console.log("bagno");
     const content = document.querySelector('.main');
     content.innerHTML = '';
     const space = document.createElement('div');
+    space.classList.add('space');
     space.style.border = '5px solid black';
     space.style.borderRadius = '15px';
     space.style.height = '100%';
     space.style.flex = '1';
-    const createToDoBtn = document.createElement('button');
-    createToDoBtn.classList.add('addCard');
 
     content.appendChild(space);
 }
@@ -114,20 +115,38 @@ function renderProject()
 function creareToDo()
 {
     const project = document.querySelector('.active');
+    const id = project.id;
+    project.classList.add(id);
     return new Promise((resolve) => {
         
         const toDoCard = document.createElement('div');
         toDoCard.classList.add('toDo');
-        
+        const _title = document.createElement('h1');
+        const _description = document.createElement('p');
+        const _dueDate = document.createElement('p');
+        const _priority = document.createElement('p');
+
+        toDoCard.appendChild(_title);
+        toDoCard.appendChild(_description);
+        toDoCard.appendChild(_dueDate);
+        toDoCard.appendChild(_priority);
 
         ToDoInfo().then((title,description,dueDate,priority) => {
-            creareToDoServer(title,description,dueDate,priority)
-            project.appendChild(toDoCard);
+            creareToDoServer(title,description,dueDate,priority);
+            _title = title;
+            _description = description;
+            _dueDate = dueDate;
+            _priority = priority;
+            cardArray.push(toDoCard);
             resolve(title,description,dueDate,priority);  
         });
 
-        project.appendChild(toDoCard);
     });
+}
+
+function renderToDo()
+{
+    const container = document.querySelector('.space');
 }
 
 function ToDoInfo()
