@@ -1,4 +1,4 @@
-export function createProjectServer(title,description)
+export function createProject(title,description)
 {
     const _title = title;
     const _description = description;
