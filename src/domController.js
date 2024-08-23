@@ -51,9 +51,10 @@ function projectInfo() {
             event.preventDefault(); 
             const projectName = name.value;
             const projectDescription = description.value;
+            console.log(projectDescription);
             form.remove();
             formContainer.remove(); 
-            resolve(projectName, projectDescription); 
+            resolve([projectName, projectDescription]); 
         });
     });
     
@@ -62,9 +63,9 @@ function projectInfo() {
 function createProjectUI()
 {
     return new Promise((resolve) => {
-        projectInfo().then((name, description) => {
-            resolve(name, description);  
-            saveProject(name,description);
+        projectInfo().then((v) => {  
+            console.log(v[1]);
+            saveProject(v[0],v[1]);
             showProjects();
         });
     });

@@ -3,7 +3,9 @@ import { createProject } from "./domCreator";
 export function saveProject(title, description)
 {
     const project = createProject(title,description);
-    const projectString = JSON.stringify(project);
+    console.log(project);
+    const projectString = JSON.stringify(project, null, 2);
+    console.log(projectString);
     localStorage.setItem(title, projectString);
     
 }
