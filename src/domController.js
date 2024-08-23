@@ -1,6 +1,6 @@
 import { loadProject, loadAllProjects, saveProject } from "./storage";
 
-
+var doProjectsExist = false;
 function controller() {
     document.addEventListener('click', (e) => {
         if(e.target.matches('.project'))
@@ -62,7 +62,8 @@ function projectInfo() {
 
 function createProjectUI()
 {
-    return new Promise((resolve) => {
+    document.querySelector('.active').classList.remove('active');
+    return new Promise(() => {
         projectInfo().then((v) => {  
             console.log(v[1]);
             saveProject(v[0],v[1]);
@@ -91,7 +92,6 @@ function renderProjectBtn(project)
     const projectsContainer = document.querySelector('.projects-container');
     const projectBtn = document.createElement('button');
 
-    projectBtn.classList.add('project');
     projectBtn.innerHTML = project._title;
     projectsContainer.appendChild(projectBtn);
 }
