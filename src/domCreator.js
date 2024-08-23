@@ -1,7 +1,9 @@
 export function createProject(title,description)
 {
-    const _title = title;
-    const _description = description;
+    const project = {
+        _title: title,
+        _description: description
+    };
 
-    return {_title, _description};
+    return project;
 }

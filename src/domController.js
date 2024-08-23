@@ -5,18 +5,16 @@ function controller() {
     document.addEventListener('click', (e) => {
         if(e.target.matches('.project'))
         {
+            loadProject(e.target.innerHTML);
             changeActiveProject(e.target);
         }
         if(e.target.matches('.add'))
         {
             createProjectUI();
-            console.log('bb');
         }
         if(e.target.matches('.addT'))
         {
-            const container = document.querySelector(".projects-container");
-            container.innerHTML = "";
-            showProjects();
+
         }   
     });
 }
@@ -65,10 +63,9 @@ function createProjectUI()
 {
     return new Promise((resolve) => {
         projectInfo().then((name, description) => {
-
-            saveProject(name,description);
-
             resolve(name, description);  
+            saveProject(name,description);
+            showProjects();
         });
     });
 }
@@ -81,12 +78,24 @@ function changeActiveProject(project)
 
 function showProjects()
 {
+    const projectsContainer = document.querySelector('.projects-container');
+    projectsContainer.innerHTML = "";
     loadAllProjects().forEach(project => {
-        console.log('aa')
+        renderProjectBtn(project);
     });
+}
+
+function renderProjectBtn(project)
+{
+    const projectsContainer = document.querySelector('.projects-container');
+    const projectBtn = document.createElement('button');
+
+    projectBtn.classList.add('project');
+    projectBtn.innerHTML = project._title;
+    projectsContainer.appendChild(projectBtn);
 }
 
 
 export {
-    controller
+    controller, showProjects
 }

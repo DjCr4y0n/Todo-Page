@@ -1,16 +1,10 @@
 import { createProject } from "./domCreator";
 
-export function saveProject(name, description)
+export function saveProject(title, description)
 {
-    const project = createProject(name,description);
+    const project = createProject(title,description);
     const projectString = JSON.stringify(project);
-    localStorage.setItem(project._title, projectString);
-    console.log('hhhh');
-    for (let index = 0; index < localStorage.length; index++) {
-        const key = localStorage.key(index);        // Get the key at this index
-        const storedValue = localStorage.getItem(key);  // Get the value associated with the key
-        console.log(`Key: ${key}, Value: ${storedValue}`); // Log the key and its stored value
-    }
+    localStorage.setItem(title, projectString);
     
 }
 
