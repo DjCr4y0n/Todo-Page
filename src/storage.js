@@ -1,13 +1,20 @@
-import { createProject } from "./domCreator";
+import { createProject, createCard } from "./domCreator";
 
 export function saveProject(title, description)
 {
     const project = createProject(title,description);
-    console.log(project);
     const projectString = JSON.stringify(project, null, 2);
     console.log(projectString);
     localStorage.setItem(title, projectString);
-    
+    const list = [];
+    localStorage.setItem(title + 'List', list);
+}
+
+export function saveCard(projectName, title)
+{
+    let cardList = JSON.parse(localStorage.getItem(projectName+'List'));
+    cardList.push(createCard(title));
+    localStorage.setItem(projectName+'List', JSON.stringify(cardList));
 }
 
 export function loadAllProjects()

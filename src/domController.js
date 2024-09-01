@@ -8,7 +8,7 @@ function controller() {
             changeActiveProject(e.target);
             renderContent(loadProject(e.target.innerHTML));
         }
-        if(e.target.matches('.add'))
+        if(e.target.matches('.addP'))
         {
             createProjectUI();
         }
@@ -125,6 +125,7 @@ function renderContent(project)
     const projectHeadline = document.querySelector('.project-title');
 
     addTodoBtn.innerHTML = 'Add ToDo card';
+    addTodoBtn.classList.add('addT');
     removeProjectBtn.innerHTML = 'Remove Project';
 
     todoContainer.innerHTML = "";
@@ -134,6 +135,11 @@ function renderContent(project)
     projectHeadline.appendChild(title);
     todoContainer.appendChild(addTodoBtn);
     todoContainer.appendChild(removeProjectBtn);
+}
+
+function createCardUI()
+{
+    const activeElement = document.querySelector('.project.active');  
 }
 
 
