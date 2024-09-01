@@ -60,21 +60,35 @@ function projectInfo() {
     
 }
 
-function createProjectUI()
-{
-    document.querySelector('.active').classList.remove('active');
-    return new Promise(() => {
-        projectInfo().then((v) => {  
-            console.log(v[1]);
-            saveProject(v[0],v[1]);
-            showProjects();
+function createProjectUI() {
+    const activeElement = document.querySelector('.project.active');
+
+    if (activeElement) {
+        activeElement.classList.remove('active');
+    }
+    
+
+    projectInfo().then((v) => {  
+        saveProject(v[0], v[1]);  
+        showProjects();  
+        
+       
+        const elements = document.querySelectorAll('.project'); 
+        elements.forEach(el => {
+            if (el.innerText == v[0]) {  
+                el.classList.add("active");
+            }
         });
     });
 }
 
 function changeActiveProject(project)
 {
-    document.querySelector('.project.active').classList.remove('active');
+    const activeElement = document.querySelector('.project.active');
+
+    if (activeElement) {
+        activeElement.classList.remove('active');
+    }
     project.classList.add('active');
 }
 
@@ -92,6 +106,7 @@ function renderProjectBtn(project)
     const projectsContainer = document.querySelector('.projects-container');
     const projectBtn = document.createElement('button');
 
+    projectBtn.classList.add('project');  
     projectBtn.innerHTML = project._title;
     projectsContainer.appendChild(projectBtn);
 }
