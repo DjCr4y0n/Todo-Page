@@ -5,8 +5,8 @@ function controller() {
     document.addEventListener('click', (e) => {
         if(e.target.matches('.project'))
         {
-            loadProject(e.target.innerHTML);
             changeActiveProject(e.target);
+            renderContent(loadProject(e.target.innerHTML));
         }
         if(e.target.matches('.add'))
         {
@@ -79,17 +79,21 @@ function createProjectUI() {
                 el.classList.add("active");
             }
         });
+
+        renderContent(loadProject(v[0]));
     });
 }
 
 function changeActiveProject(project)
 {
+    console.log(project);
     const activeElement = document.querySelector('.project.active');
 
     if (activeElement) {
         activeElement.classList.remove('active');
     }
     project.classList.add('active');
+
 }
 
 function showProjects()
@@ -109,6 +113,27 @@ function renderProjectBtn(project)
     projectBtn.classList.add('project');  
     projectBtn.innerHTML = project._title;
     projectsContainer.appendChild(projectBtn);
+}
+
+function renderContent(project)
+{
+    const space = document.getElementById('main');
+    const addTodoBtn = document.createElement('button');
+    const removeProjectBtn = document.createElement('button');
+    const title = document.createElement('h1');
+    const todoContainer = document.querySelector('.todo-container');
+    const projectHeadline = document.querySelector('.project-title');
+
+    addTodoBtn.innerHTML = 'Add ToDo card';
+    removeProjectBtn.innerHTML = 'Remove Project';
+
+    todoContainer.innerHTML = "";
+    projectHeadline.innerHTML = "";
+    title.innerHTML = project._title;
+
+    projectHeadline.appendChild(title);
+    todoContainer.appendChild(addTodoBtn);
+    todoContainer.appendChild(removeProjectBtn);
 }
 
 

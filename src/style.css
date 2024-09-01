@@ -49,9 +49,12 @@ body
     font-size: 13px;
 }
 
-.main
+#main
 {
     grid-area: 2 / 2 / 3 / 3;
+    background-color: aqua;
+    border-style: dashed;
+    border-color: black;
 }
 
 .centered-form {
